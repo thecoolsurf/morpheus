@@ -7,8 +7,11 @@ use Symfony\Component\Validator\Validation;
 
 class Api
 {
+    
     public static function send(array $input, string $vertical): void
     {
+        $errors = [];
+        
         if (!in_array($vertical, ['real_estate', 'job'])) {
             die("Wrong vertical: {$vertical}");
         }
@@ -72,7 +75,7 @@ class Api
         $constraint = new Assert\Collection(['fields' => $fields]);
         $violations = $validator->validate($input, $constraint);
         foreach ($violations as $violation) {
-            $errors[] = "{$violation->getPropertyPath()}: {$violation->getMessage()} \n";
+            array_push($errors, "{$violation->getPropertyPath()}: {$violation->getMessage()} \n");
         }
 
         if (!empty($errors)) {
