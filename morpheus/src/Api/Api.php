@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Validation;
 class Api
 {
     
-    public static function send(array $input, string $vertical): void
+    public static function check(array $input, string $vertical): void
     {
         $errors = [];
         

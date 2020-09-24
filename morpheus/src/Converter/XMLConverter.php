@@ -2,40 +2,35 @@
 
 namespace App\Converter;
 
-use DOMElement;
-use App\Validator\Api;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\Container;
+use DOMDocument;
 
 class XMLConverter
 {
     
-    private $filepath;
-
-    public function __construct(Container $container)
+    public static function xmlToArray(string $filepath): array
     {
-        $this->filepath = $container->getParameter('kernel.project_dir');
-    }
-    
-    /**
-     * 
-     * @param string $filename
-     * @return array
-     */
-    public static function xmlToArray(string $filename): array
-    {
-        $xml = NULL;
-        $filepath = '/data/'.$filename.'.xml';
-        if(\file_exists($filepath)):
-            $DOMDocument = new \DOMDocument();
-            $DOMDocument->preserveWhiteSpace = false;
-            $DOMDocument->formatOutput = true;
-            if($DOMDocument->load($filepath,false)):
-                $xml = $DOMDocument;
-            endif;
-        endif;
-//        exit($filepath);
-        return [$xml];
+        $result = [];
+        if (file_exists($filepath)) {
+            $DOM = new DOMDocument();
+            $document = $DOM::load($filepath, 0);
+            var_dump($document);
+            $datas = $document->getElementsByTagName('job');
+            foreach ($datas as $item) {
+                foreach ($item->childNodes as $nodes) {
+                    $name = $nodes->nodeName;
+                    $value = $nodes->nodeValue;
+                }
+                var_dump($name);
+                var_dump($value);
+                array_push($result, [
+                    'name' => $name,
+                    'value' => $value,
+                ]);
+            }
+        } else {
+            die('XML file not found');
+        }
+        return $result;
     }
     
 }

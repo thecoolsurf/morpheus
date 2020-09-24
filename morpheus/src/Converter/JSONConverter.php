@@ -2,10 +2,13 @@
 
 namespace App\Converter;
 
-class JsonConverter
+class JSONConverter
 {
+    
     public static function jsonToArray(string $filepath): array
     {
-        // ...
+        $result = [];
+        return $result;
     }
+    
 }
