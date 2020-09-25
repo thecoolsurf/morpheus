@@ -3,16 +3,15 @@
 
 namespace App\Hook;
 
-use App\Validator\Api;
-
 class JobHook
 {
     
     public function formatAd(array $ad): array
     {
-        $api = new Api();
-        $check = $api->check($ad, 'job');
-        return $check;
+        $search = ["    ","   ","  ","\n\n\n","\n\n"];
+        $replace = ["","","","\n","\n"];
+        $value = str_replace($search, $replace, $ad);
+        return $value;
     }
 
     public function buildDescription()

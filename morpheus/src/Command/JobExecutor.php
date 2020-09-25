@@ -33,17 +33,16 @@ class JobExecutor extends Command
                     $ads = XMLConverter::xmlToArray($filepath);
                 break;
                 default :
-                    $ads = XMLConverter::xmlToArray($filepath);
+                    $ads = [];
                 break;
             }
         }
         $formatted_ads = [];
         $job_hooks = new JobHook();
-//        foreach ($ads as $ad) {
-//            array_push($formatted_ads, $job_hooks->formatAd($ad));
-//        }
-//        send($inputs,$vertical);
-//        print_r($formatted_ads);
+        foreach ($ads as $ad) {
+            array_push($formatted_ads, $job_hooks->formatAd($ad));
+        }
+        print_r($formatted_ads);
         return Command::SUCCESS;
     }
 

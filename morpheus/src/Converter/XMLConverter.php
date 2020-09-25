@@ -13,23 +13,18 @@ class XMLConverter
         if (file_exists($filepath)) {
             $DOM = new DOMDocument();
             $document = $DOM::load($filepath, 0);
-            $datas = $document->getElementsByTagName('jobs');
-            foreach ($datas as $item) {
-                foreach ($item->childNodes as $nodes) {
-                    $name = $nodes->nodeName;
-                    $value = $nodes->nodeValue;
-                    var_dump($name);
-                    var_dump($value);
+            $jobs = $document->getElementsByTagName('jobs');
+            foreach ($jobs as $job) {
+                foreach ($job->childNodes as $nodes) {
                     array_push($result, [
-                        'name' => $name,
-                        'value' => $value,
+                        'name' => $nodes->nodeName,
+                        'value' => $nodes->nodeValue,
                     ]);
                 }
             }
         } else {
             die('XML file not found');
         }
-        var_dump($result);
         return $result;
     }
 
