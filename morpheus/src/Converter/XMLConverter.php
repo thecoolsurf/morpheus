@@ -13,13 +13,15 @@ class XMLConverter
         if (file_exists($filepath)) {
             $DOM = new DOMDocument();
             $document = $DOM::load($filepath, 0);
-            $jobs = $document->getElementsByTagName('jobs');
-            foreach ($jobs as $job) {
-                foreach ($job->childNodes as $nodes) {
-                    array_push($result, [
-                        'name' => $nodes->nodeName,
-                        'value' => $nodes->nodeValue,
-                    ]);
+            $datas = $document->getElementsByTagName('jobs');
+            foreach ($datas as $items) {
+                foreach ($items->childNodes as $nodes) {
+                    if (!in_array($nodes->nodeValue, ['job']) && $nodes->nodeName == 'job') {
+                        array_push($result, [
+                            'name' => $nodes->nodeName,
+                            'value' => $nodes->nodeValue,
+                        ]);
+                    }
                 }
             }
         } else {

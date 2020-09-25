@@ -80,7 +80,7 @@ class Api
 
         if (!empty($errors)) {
             print_r($errors);
-//            die;
+            die;
         }
     }
 }

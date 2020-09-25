@@ -9,6 +9,7 @@ use Symfony\Component\Finder\Finder;
 use App\Hook\JobHook;
 use App\Converter\XMLConverter;
 use App\Converter\JSONConverter;
+use App\Validator\Api;
 
 class JobExecutor extends Command
 {
@@ -25,6 +26,7 @@ class JobExecutor extends Command
         foreach ($files as $file) {
             $vertical = explode('.', $file->getRelativePathname())[0];
             $filepath = $file->getRealPath();
+            var_dump($vertical);
             switch ($vertical) {
                 case 'real_estate':
                     $ads = JSONConverter::jsonToArray($filepath);
@@ -36,6 +38,8 @@ class JobExecutor extends Command
                     $ads = [];
                 break;
             }
+            $api = new Api();
+            $api->send($ads, $vertical);
         }
         $formatted_ads = [];
         $job_hooks = new JobHook();

@@ -8,8 +8,8 @@ class JobHook
     
     public function formatAd(array $ad): array
     {
-        $search = ["    ","   ","  ","\n\n\n","\n\n"];
-        $replace = ["","","","\n","\n"];
+        $search = ["    ","   ","  "," :","\n\n\n","\n\n"];
+        $replace = ["","","\n"," :\n","\n",];
         $value = str_replace($search, $replace, $ad);
         return $value;
     }
