@@ -38,13 +38,13 @@ class JobExecutor extends Command
                     $ads = [];
                 break;
             }
-            $api = new Api();
-            $api->send($ads, $vertical);
-        }
-        $formatted_ads = [];
-        $job_hooks = new JobHook();
-        foreach ($ads as $ad) {
-            array_push($formatted_ads, $job_hooks->formatAd($ad));
+            $formatted_ads[$vertical] = [];
+            $job_hooks = new JobHook();
+            foreach ($ads as $ad) {
+                array_push($formatted_ads[$vertical], $job_hooks->formatAd($ad));
+            }
+//            $api = new Api();
+//            $api->send($ads, $vertical);
         }
         print_r($formatted_ads);
         return Command::SUCCESS;
