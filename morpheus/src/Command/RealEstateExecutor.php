@@ -34,7 +34,7 @@ class RealEstateExecutor extends Command
                 }
             }
             $api = new Api();
-//            $api->send($ads, $vertical);
+            $api->send($formatted_ads, $vertical);
         }
         print_r($formatted_ads);
         return Command::SUCCESS;
