@@ -8,7 +8,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use App\Hook\JobHook;
 use App\Converter\XMLConverter;
-use App\Converter\JSONConverter;
 use App\Validator\Api;
 
 class JobExecutor extends Command
@@ -23,27 +22,18 @@ class JobExecutor extends Command
     {
         $finder = new Finder();
         $files = $finder->in('./data');
+        $formatted_ads = [];
         foreach ($files as $file) {
             $vertical = explode('.', $file->getRelativePathname())[0];
             $filepath = $file->getRealPath();
-            var_dump($vertical);
-            switch ($vertical) {
-                case 'real_estate':
-                    $ads = JSONConverter::jsonToArray($filepath);
-                break;
-                case 'job':
-                    $ads = XMLConverter::xmlToArray($filepath);
-                break;
-                default :
-                    $ads = [];
-                break;
+            if ($vertical == 'job') {
+                $ads = XMLConverter::xmlToArray($filepath);
+                $hooks = new JobHook();
+                foreach ($ads as $ad) {
+                    array_push($formatted_ads, $hooks->formatAd($ad));
+                }
             }
-            $formatted_ads[$vertical] = [];
-            $job_hooks = new JobHook();
-            foreach ($ads as $ad) {
-                array_push($formatted_ads[$vertical], $job_hooks->formatAd($ad));
-            }
-//            $api = new Api();
+            $api = new Api();
 //            $api->send($ads, $vertical);
         }
         print_r($formatted_ads);

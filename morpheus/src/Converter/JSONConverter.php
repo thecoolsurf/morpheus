@@ -9,9 +9,8 @@ class JSONConverter
     {
         $result = [];
         if (file_exists($filepath)) {
-            $json = file_get_contents($filepath);
+            $json = file_get_contents('./data/real_estate.json');
             $result = json_decode($json,true);
-//            var_dump($result);
         } else {
             die('JSON file not found');
         }
